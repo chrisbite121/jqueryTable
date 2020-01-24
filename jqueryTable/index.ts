@@ -1,6 +1,7 @@
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
-import { FinanceAppClass } from './service/financeApp';
+import { FinanceAppTableClass } from './service/financeAppTable';
 import { FinanceAppConfigClass } from './service/financeAppConfig';
+import { IFinanceAppConfig } from './model/IFinanceAppConfig';
 
 import * as $ from "jquery";
 import * as d3 from "d3";
@@ -9,7 +10,7 @@ export class jqueryTable implements ComponentFramework.StandardControl<IInputs, 
 	// Value of the field is stored and used inside the component
 	private _value: string;
 	//config object for finance app
-	private _config: object;
+	private _config: IFinanceAppConfig;
 	// PowerApps component framework delegate which will be assigned to this object which would be called whenever any update happens.
 	private _notifyOutputChanged: () => void;
 	// This element contains all elements of our code component example
@@ -18,12 +19,14 @@ export class jqueryTable implements ComponentFramework.StandardControl<IInputs, 
 	private _context: ComponentFramework.Context<IInputs>;
 	// Event Handler 'refreshData' reference
 	private _refreshData: EventListenerOrEventListenerObject;
+	// finance table element
+	private _financeTable: HTMLDivElement;
 	// input element that is used to create the range slider
 	private _inputElement: HTMLInputElement;
 	// label element created as part of this component
 	private _labelElement: HTMLLabelElement;
 
-	private _financeAppService: any = new FinanceAppClass();
+	private _financeAppTableService: any = new FinanceAppTableClass();
 	private _financeAppConfigService: any = new FinanceAppConfigClass();
 	
 	constructor() {}
@@ -44,23 +47,33 @@ export class jqueryTable implements ComponentFramework.StandardControl<IInputs, 
 		this._refreshData = this.refreshData.bind(this);
 
 		this._inputElement = document.createElement("input")
-		this._inputElement.addEventListener("input", this._refreshData);
+		// this._inputElement.addEventListener("input", this._refreshData);
 
 		// creating a HTML label element that shows the value that is set on the linear range component
 		this._labelElement = document.createElement("label");
 
+		//get copy of the config for this app
 		this._config = this._financeAppConfigService.config;
 
-		this._financeAppService.constructTable(this._config);
+		//construct table and return object containing html
+		this._financeTable = this._financeAppTableService.constructTable(this._config);
+		this._financeTable.addEventListener("input", this._refreshData);
+		//generate the finance app timefield Ids and add to config object
+		//this data can be determined once table has been constructed
+		this._config = this._financeAppTableService.generateTimeFieldIds(this._config)
 
 		this._container.appendChild(this._inputElement);
 		this._container.appendChild(this._labelElement);
+		this._container.appendChild(this._financeTable);
 		container.appendChild(this._container);
 	}
 
 	public refreshData(evt: Event): void {
-		this._value = (this._inputElement.value as any) as string;
-		this._labelElement.innerHTML = this._inputElement.value;
+		console.log('input data');
+		console.log((<HTMLInputElement>evt.target).value);
+
+		// this._value = (this._inputElement as any) as string;
+		// this._labelElement.innerHTML = this._inputElement.value;
 		this._notifyOutputChanged();
 	  }
 	/**
@@ -91,6 +104,6 @@ export class jqueryTable implements ComponentFramework.StandardControl<IInputs, 
 	 */
 	public destroy(): void
 	{
-		this._inputElement.removeEventListener("input", this._refreshData);
+		this._financeTable.removeEventListener("input", this._refreshData);
 	}
 }

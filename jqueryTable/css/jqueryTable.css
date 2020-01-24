@@ -1,0 +1,112 @@
+.faRowHeader {
+    font-weight: bold;
+    height: 50%;
+    padding: 0;
+    margin:0;
+};
+
+#financeAppContainer {
+    width: 100%;
+    overflow-x:auto;
+}
+
+.faInputField {
+    width: 50pt;
+    padding: 0px;
+    margin: 0px;
+}
+
+.faRowHeader {
+    background-color: #f2f2f2;
+}
+
+.faRowInput:hover {
+    background-color: #f5f5f5;
+}
+
+.faTable {
+    border-collapse: collapse;
+}
+
+.faTable th {
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.faTable td {
+    border-bottom: 1px solid #ddd;
+}
+
+.faInputField {
+    text-align: right;
+}
+
+.faTotalCell {
+    font-weight: bold;
+    text-align: right;
+}
+
+.summaryColumnHeader{
+    padding-right: 20px;
+    text-align: left;
+}
+
+._faColumnHeaderLabel {
+    padding-right: 20px;
+    text-align: left;
+}
+
+.faSummaryField {
+    padding-right: 5px;
+}
+
+.faTotalCell {
+    min-width: 70px
+}
+
+div.barChart {
+    background-color: #fff;
+    margin-top: 75px;
+}
+
+div.barChartTooltip {	
+    position: absolute;
+    z-index: 1;			
+    text-align: center;			
+    width: 65px;					
+    height: 40px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;
+    opacity: 0;
+    color: #000		
+}
+
+
+.faCalcFieldLabel  {
+    padding-top:20px;
+    padding-right: 10px;
+    float: left;
+    overflow: hidden;
+}
+
+.faCalcFieldValue {
+    font-weight: bold;
+    padding-top:20px;
+    padding-right: 10px;
+    float: left;
+    overflow: hidden;        
+}
+
+#faToolbar_notification{
+    float: right
+}
+
+#faToolbar_errorMessage {
+    display: inline;
+    font-weight: bold;
+    color: red; 
+}
